@@ -7,7 +7,7 @@ const navItems = [
   { name: "CANDIDATE", href: "/candidate" },
   { name: "VOTE", href: "/vote" },
   { name: "SUMMARIZE", href: "/summarize" },
-  { name: "PROJECT", href: "/project" },
+  { name: "PROJECT", href: "/myproject" },
   { name: "ABOUT", href: "/about" },
 ];
 
