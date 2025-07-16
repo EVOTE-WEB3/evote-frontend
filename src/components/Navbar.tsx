@@ -1,9 +1,12 @@
+"use client"
+
 import React from "react";
 import Link from "next/link";
 import { FiInstagram } from "react-icons/fi";
 import { SlSocialLinkedin } from "react-icons/sl";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { ConnectWalletButton } from "./ConnectWalletBtn";
 
 const Navbar = () => {
   return (
@@ -25,6 +28,8 @@ const Navbar = () => {
             <span>CONTACT</span>
             <HiOutlineArrowNarrowRight />
           </button>
+
+          <ConnectWalletButton/>
 
           {/* Ikon Sosial & Pencarian */}
           <div className="flex items-center gap-x-2 ">
