@@ -268,4 +268,3 @@ export const contractABI = [
 ];
   
 export const contractAddress = "0xdE5b9b168b2Aa0f8C6886Ee0b0d3E1eC8c45d4a7"; // Ganti dengan alamat deploy Anda
-  

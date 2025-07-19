@@ -68,7 +68,7 @@ export default function RootLayout({
       >
         <Web3Provider> {/* 1. Bungkus semuanya dengan Provider */}
           {/* <Navbar />   2. Panggil komponen Navbar Anda */}
-          <main className="pt-24"> {/* 3. Bungkus children dengan main dan beri padding-top */}
+          <main className="pt-0"> {/* 3. Bungkus children dengan main dan beri padding-top */}
             {children}
           </main>
         </Web3Provider>
