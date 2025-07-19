@@ -267,4 +267,4 @@ export const contractABI = [
     }
 ];
   
-export const contractAddress = "0xdE5b9b168b2Aa0f8C6886Ee0b0d3E1eC8c45d4a7"; // Ganti dengan alamat deploy Anda
+export const contractAddress = "0x47D76035322d4A420A2ceB902ad5e9c6B1113895"; // Ganti dengan alamat deploy Anda

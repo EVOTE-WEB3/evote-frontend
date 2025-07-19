@@ -7,13 +7,23 @@ import { SlSocialLinkedin } from "react-icons/sl";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
 import { ConnectWalletButton } from "./ConnectWalletBtn";
+import { UserPlus } from 'lucide-react';
 
 const Navbar = () => {
   return (
     <nav className="absolute top-0 left-0 z-50 w-full px-8 py-6 text-black">
       <div className="flex items-center justify-between">
         {/* Bagian Kiri: Logo */}
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-4">
+          <ConnectWalletButton/>
+          <Link 
+            href="/register" 
+            title="Register"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-400 text-neutral-700 transition-colors hover:bg-black hover:text-white"
+          >
+            <UserPlus size={18} />
+          </Link>
+          
           {/* <Link href="/" >
             <a className="font-bebas text-4xl font-bold tracking-wider">
               Your Creative
@@ -24,12 +34,11 @@ const Navbar = () => {
         {/* Bagian Kanan: Tombol & Ikon */}
         <div className="flex items-center gap-x-6">
           {/* Tombol Contact */}
+          
           <button className="hidden sm:flex items-center gap-x-2 rounded-full border border-neutral-400 px-5 py-2 text-sm font-medium tracking-wide text-neutral-700 transition-colors hover:bg-black hover:text-white">
             <span>CONTACT</span>
             <HiOutlineArrowNarrowRight />
           </button>
-
-          <ConnectWalletButton/>
 
           {/* Ikon Sosial & Pencarian */}
           <div className="flex items-center gap-x-2 ">
