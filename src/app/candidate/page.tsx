@@ -38,23 +38,20 @@ interface Candidate {
   id: number;
   name: string; // Dari blockchain
   voteCount: number; // Dari blockchain
-  party: string; // Data statis
-  position: string; // Data statis
-  image: string; // Data statis
-  description: string; // Data statis
-  experience: string[]; // Data statis
-  achievements: string[]; // Data statis
-  vision: string; // Data statis
-  age: number; // Data statis
-  location: string; // Data statis
-  color: string; // Data statis
+  party?: string; // Data statis (opsional)
+  position?: string; // Data statis (opsional)
+  image?: string; // Data statis (opsional)
+  description?: string; // Data statis (opsional)
+  experience?: string[]; // Data statis (opsional)
+  achievements?: string[]; // Data statis (opsional)
+  vision?: string; // Data statis (opsional)
+  age?: number; // Data statis (opsional)
+  location?: string; // Data statis (opsional)
+  color?: string; // Data statis (opsional)
 }
 
-// Data statis/off-chain untuk kandidat.
-// Nama harus cocok persis dengan yang ada di smart contract.
 const staticCandidateDetails = [
-  {
-    name: "Sarah Johnson", // Cocokkan dengan nama di smart contract
+  { // Indeks 0
     party: "Progressive Alliance",
     position: "Presidential Candidate",
     image: "/placeholder.svg?height=300&width=300",
@@ -66,8 +63,7 @@ const staticCandidateDetails = [
     location: "San Francisco, CA",
     color: "bg-green-500",
   },
-  {
-    name: "Michael Chen", // Cocokkan dengan nama di smart contract
+  { // Indeks 1
     party: "Innovation Party",
     position: "Presidential Candidate",
     image: "/placeholder.svg?height=300&width=300",
@@ -79,7 +75,18 @@ const staticCandidateDetails = [
     location: "Austin, TX",
     color: "bg-blue-500",
   },
-  // Tambahkan detail statis untuk kandidat lain jika ada
+  { // Indeks 2
+    party: "People's Unity",
+    position: "Presidential Candidate",
+    image: "/placeholder.svg?height=300&width=300",
+    description: "Healthcare professional fighting for accessible healthcare.",
+    experience: ["Chief Medical Officer, State Health Dept (2020-2024)", "Emergency Room Physician (2008-2020)"],
+    achievements: ["Led COVID-19 response strategy", "Established 50 community health centers"],
+    vision: "Ensuring healthcare is a human right, not a privilege.",
+    age: 48,
+    location: "Phoenix, AZ",
+    color: "bg-purple-500",
+  },
 ];
 
 
@@ -97,32 +104,28 @@ export default function CandidatesPage() {
 
   useEffect(() => {
     const fetchCandidates = async () => {
-      console.log("Try to load candidate data");
       if (contract) {
         setIsLoading(true);
         try {
           const [names, voteCounts] = await contract.getResults();
           
-          console.log ("Data has been received from : ", {names, voteCounts});
-
           const combinedData = names.map((name: string, index: number) => {
-            const staticData = staticCandidateDetails.find(c => c.name === name) || {};
+            // Cocokkan berdasarkan indeks
+            const staticData = staticCandidateDetails[index] || {};
             return {
               id: index,
-              name: name,
-              voteCount: Number(voteCounts[index]),
-              ...staticData,
+              name: name, // Data dari blockchain
+              voteCount: Number(voteCounts[index]), // Data dari blockchain
+              ...staticData, // Sisa data dari array statis
             };
           });
 
-          setCandidates(combinedData as Candidate[]);
+          setCandidates(combinedData);
         } catch (error) {
           console.error("Gagal mengambil data kandidat:", error);
           showNotification("Gagal memuat data kandidat.");
         }
         setIsLoading(false);
-      } else {
-        console.log("Object contracs not yet ready")
       }
     };
     fetchCandidates();
@@ -147,10 +150,10 @@ export default function CandidatesPage() {
       // Refresh data setelah vote
       const [names, voteCounts] = await contract.getResults();
       const combinedData = names.map((name: string, index: number) => {
-        const staticData = staticCandidateDetails.find(c => c.name === name) || {};
+        const staticData = staticCandidateDetails[index] || {};
         return { id: index, name, voteCount: Number(voteCounts[index]), ...staticData };
       });
-      setCandidates(combinedData as Candidate[]);
+      setCandidates(combinedData);
     } catch (error: any) {
       console.error("Gagal memberikan suara:", error);
       showNotification(error?.reason || "Transaksi pemberian suara gagal.");
@@ -243,7 +246,7 @@ export default function CandidatesPage() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-muted-foreground" /><span>Age: {candidate.age}</span></div>
                       <div className="flex items-center gap-2"><MapPin className="w-4 h-4 text-muted-foreground" /><span>{candidate.location}</span></div>
-                      <div className="flex items-center gap-2 col-span-2"><Users className="w-4 h-4 text-muted-foreground" /><span>{candidate.voteCount?.toLocaleString() || 0} suara</span></div>
+                      <div className="flex items-center gap-2 col-span-2"><Users className="w-4 h-4 text-muted-foreground" /><span>{(candidate.voteCount || 0).toLocaleString()} suara</span></div>
                     </div>
                     <div className="flex gap-3 pt-4">
                       <Dialog>
@@ -253,7 +256,7 @@ export default function CandidatesPage() {
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-                          {/* Konten Dialog tetap sama */}
+                           {/* Konten Dialog Anda bisa diisi di sini */}
                         </DialogContent>
                       </Dialog>
                       <Button onClick={() => handleVote(candidate.id)} className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
